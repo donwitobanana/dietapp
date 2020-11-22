@@ -4,5 +4,5 @@ from edamam.api_client import EdamamApiClient
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        response = EdamamApiClient().get_food('brown rice')
+        response = EdamamApiClient().get_food('potatoes with cottage cheese')
         print(response)
