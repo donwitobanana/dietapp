@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "/home/wit_goszczynski/projects/dietapp/.venv/bin/python3.9"
+    "python.pythonPath": ".venv/bin/python",
+    "python.terminal.executeInFileDir": true,
+    "python.linting.pylintArgs": ["--load-plugins", "pylint_django"] 
 }

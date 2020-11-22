@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
-EDAMAM_API_APP_ID = 'e14b475a'
-EDAMAM_API_TOKEN = '52246240dcee75148cadb85f0ec07ad'
-EDAMAM_API_BASE_URL = 'https://api.edamam.com/api/food-database/v2'
+load_dotenv()
+
+from dietapp.settings_extensions import *
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&7og#c2!99%&lzp53s6l6$a-l)d9(ks#spdx8ou$#k&vc$i0ve'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -128,3 +131,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+import os
+print(os.path.dirname('dietapp'))

@@ -23,12 +23,3 @@ class EdamamApiClient:
         response = requests.get(uri, params=payload)
         response.raise_for_status()
         return response.json()
-
-if __name__ == '__main__':
-    import os
-    import django
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dietapp.settings')
-    django.setup()
-
-
-    EdamamApiClient().get_food('brown rice')
