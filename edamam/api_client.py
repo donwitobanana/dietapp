@@ -23,3 +23,19 @@ class EdamamApiClient:
         response = requests.get(uri, params=payload)
         response.raise_for_status()
         return response.json()
+
+    def get_nutrients(self, edamam_id, measure_uri, quantity=1):
+        uri = self._generate_uri('nutrients')
+        auth_headers = self._generate_auth_headers()
+        payload = {
+            "ingredients": [
+                {
+                "quantity": quantity,
+                "measureURI": measure_uri,
+                "foodId": edamam_id
+                }
+            ]
+        }
+        response = requests.post(uri, params=auth_headers, json=payload)
+        response.raise_for_status()
+        return response.json()
