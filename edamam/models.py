@@ -1,5 +1,4 @@
 from django.db import models
-from enum import Enum
 
 
 class Qualifier(models.Model):
@@ -15,7 +14,7 @@ class Measure(models.Model):
 
 class MeasureQualifier(models.Model):
     measure = models.ForeignKey(Measure, on_delete=models.CASCADE)
-    qualifiers = models.ForeignKey(Qualifier, on_delete=models.CASCADE)
+    qualifiers = models.ForeignKey(Qualifier, on_delete=models.CASCADE, null=True)
     weight = models.FloatField()
 
 
@@ -31,7 +30,17 @@ class FoodMeasure(models.Model):
     measure_id = models.ForeignKey(Measure, on_delete=models.CASCADE)
 
 
-class Nutrients(models.Model):
-    food = models.OneToOneField(Food, on_delete=models.CASCADE)
-    energy = models.FloatField()
-    fat = models.FloatField()
+class Nutrient(models.Model):
+    nutrient_code = models.CharField(max_length=15)
+    label = models.CharField(max_length=30)
+
+
+class Unit(models.Model):
+    name = models.CharField(max_length=10)
+
+
+class FoodNutrient(models.Model):
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+    nutrient = models.ForeignKey(Nutrient, on_delete=models.PROTECT)
+    quantity = models.FloatField()
+    unit = models.ForeignKey(Unit, on_delete=models.PROTECT)
