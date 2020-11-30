@@ -1,12 +1,12 @@
 from django.conf import settings
-import requests 
+import requests
 
 class EdamamApiClient:
     def __init__(self):
         self.application_id = settings.EDAMAM_API_APP_ID
         self.token = settings.EDAMAM_API_TOKEN
         self.base_url = settings.EDAMAM_API_BASE_URL
-    
+
     def _generate_uri(self, uri_path):
         return f'{self.base_url}/{uri_path}'
 
