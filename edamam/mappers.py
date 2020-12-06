@@ -11,5 +11,15 @@ class FoodMapper:
                 'category': food_info['category'],
                 'category_label': food_info['categoryLabel']
             }
-            measures = hint['measures']
-            yield mapped_hint, measures
+            raw_measures = hint['measures']
+            yield mapped_hint, raw_measures
+
+
+class MeasureMapper:
+
+    @staticmethod
+    def map_uri_label_object(object_dto):
+        return {
+                'uri': object_dto['uri'],
+                'label': object_dto['label']
+            }
