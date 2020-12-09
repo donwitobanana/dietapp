@@ -11,13 +11,13 @@ class FoodExtractor:
         food_dto = self.client.get_food(lookup_value)
         mapped_hints = FoodMapper.map_hints(food_dto)
         hint, raw_measures = next(mapped_hints)
-        food_id = hint.pop('food_id')
-        food_obj, _ = models.Food.objects.update_or_create(food_id=food_id, defaults=hint)
+        edamam_id = hint.pop('edamam_id')
+        food_obj, _ = models.Food.objects.update_or_create(edamam_id=edamam_id, defaults=hint)
         for measure_dto in raw_measures:
             mapped_measure = MeasureMapper.map_uri_label_object(measure_dto)
             measure_uri = mapped_measure.pop('uri')
             measure_obj, _ = models.Measure.objects.update_or_create(
-                uri=measure_uri, 
+                uri=measure_uri,
                 defaults=mapped_measure
                 )
 
@@ -25,20 +25,21 @@ class FoodExtractor:
 
             qualified = measure_dto.get('qualified')
             if qualified:
-                weight = qualified['weight']
-                for qualifier in qualified['qualifiers']:
-                    qualifier_uri = qualifier.pop('uri')
-                    qualifier_obj, _ = models.Qualifier.objects.update_or_create(
-                        uri=qualifier_uri,
-                        defaults=qualifier
-                        )
+                for qualified_dto in qualified:
+                    weight = qualified_dto['weight']
+                    for qualifier in qualified_dto['qualifiers']:
+                        qualifier_uri = qualifier.pop('uri')
+                        qualifier_obj, _ = models.Qualifier.objects.update_or_create(
+                            uri=qualifier_uri,
+                            defaults=qualifier
+                            )
 
-                    models.FoodMeasure.objects.update_or_create(
-                        food=food_obj,
-                        measure=measure_obj,
-                        qualifier=qualifier_obj,
-                        defaults={'weight': weight}
-                        )
+                        models.FoodMeasure.objects.update_or_create(
+                            food=food_obj,
+                            measure=measure_obj,
+                            qualifier=qualifier_obj,
+                            defaults={'weight': weight}
+                            )
 
             else:
                 models.FoodMeasure.objects.update_or_create(
