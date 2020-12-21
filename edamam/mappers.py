@@ -23,3 +23,13 @@ class MeasureMapper:
                 'uri': object_dto['uri'],
                 'label': object_dto['label']
             }
+
+
+class NutrientMapper:
+
+    @staticmethod
+    def map_nutrients(nutrients_dto):
+        nutrients = nutrients_dto['totalNutrients']
+        for nutrient_code, nutrient_info in nutrients.items():
+            nutrient = {'nutrient_code': nutrient_code, 'label': nutrient_info['label']}
+            yield nutrient, nutrient_info['quantity'], nutrient_info['unit']
