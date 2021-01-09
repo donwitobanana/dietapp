@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic.list import ListView
 
-# Create your views here.
+from edamam.models import Food
+
+
+class FoodListView(ListView):
+    model = Food
+    paginate_by = 100

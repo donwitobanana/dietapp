@@ -19,6 +19,7 @@ class FoodExtractor(EdamamExtractor):
                     self._create_food_measure(food_obj, measure_obj, weight, qualifier_obj)
             else:
                 self._create_food_measure(food_obj, measure_obj, weight)
+        return food_obj
 
     def _extract_food(self, lookup_value):
         food_dto = self.client.get_food(lookup_value)
