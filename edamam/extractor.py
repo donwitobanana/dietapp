@@ -5,7 +5,8 @@ from edamam.mappers import FoodMapper, MeasureMapper, NutrientMapper
 
 class EdamamExtractor:
     def __init__(self):
-        self.client = EdamamApiClient()    
+        self.client = EdamamApiClient()
+
 
 class FoodExtractor(EdamamExtractor):
 
@@ -18,7 +19,7 @@ class FoodExtractor(EdamamExtractor):
                     self._create_food_measure(food_obj, measure_obj, weight, qualifier_obj)
             else:
                 self._create_food_measure(food_obj, measure_obj, weight)
-      
+
     def _extract_food(self, lookup_value):
         food_dto = self.client.get_food(lookup_value)
         mapped_hints = FoodMapper.map_hints(food_dto)
@@ -53,15 +54,15 @@ class FoodExtractor(EdamamExtractor):
         measure_obj, _ = models.Measure.objects.update_or_create(
             uri=measure_uri,
             defaults=measure
-            )
+        )
         return measure_obj
 
     def _create_qualifier(self, qualifier):
         qualifier_uri = qualifier.pop('uri')
         qualifier_obj, _ = models.Qualifier.objects.update_or_create(
-                        uri=qualifier_uri,
-                        defaults=qualifier
-                        )
+            uri=qualifier_uri,
+            defaults=qualifier
+        )
         return qualifier_obj
 
     def _create_food_measure(self, food, measure, weight, qualifier=None):
@@ -72,9 +73,6 @@ class FoodExtractor(EdamamExtractor):
             defaults={'weight': weight}
         )
         return food_measure_obj
-    
-
-
 
 
 class NutrientExtractor(EdamamExtractor):
@@ -98,9 +96,9 @@ class NutrientExtractor(EdamamExtractor):
 
     def _create_food_nutrient(self, food, nutrient, unit, value):
         food_nutrient_obj, _ = models.FoodNutrient.objects.update_or_create(
-                food=food,
-                nutrient=nutrient,
-                unit=unit,
-                defaults={'value': value}
-                )
+            food=food,
+            nutrient=nutrient,
+            unit=unit,
+            defaults={'value': value}
+        )
         return food_nutrient_obj
