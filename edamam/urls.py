@@ -1,7 +1,8 @@
-from django.urls import path
+from rest_framework import routers
 
-from edamam.views import FoodListView
+from edamam.views import FoodViewSet
 
-urlpatterns = [
-    path('foods/', FoodListView.as_view(), name='food-list')
-]
+router = routers.SimpleRouter()
+router.register(r'foods', FoodViewSet)
+
+urlpatterns = router.urls

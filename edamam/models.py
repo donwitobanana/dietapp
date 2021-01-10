@@ -35,7 +35,7 @@ class Unit(models.Model):
 
 
 class FoodNutrient(models.Model):
-    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE, related_name='food_nutrients')
     nutrient = models.ForeignKey(Nutrient, on_delete=models.CASCADE)
     value = models.FloatField()
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
