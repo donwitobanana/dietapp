@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.relations import SlugRelatedField
 
 from edamam.models import Food, FoodNutrient, Nutrient, Unit
 
@@ -17,17 +18,21 @@ class UnitSerializer(serializers.ModelSerializer):
 
 class FoodNutrientSerializer(serializers.ModelSerializer):
     nutrient = NutrientSerializer(read_only=True)
-    unit = UnitSerializer(read_only=True)
+    unit = SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='name'
+    )
 
     class Meta:
         model = FoodNutrient
-        exclude = ['food']
+        exclude = ['id', 'food']
 
 
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
-        fields = '__all__'
+        exclude = ['edamam_id']
 
 
 class FoodDetailSerializer(serializers.ModelSerializer):
@@ -35,4 +40,4 @@ class FoodDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Food
-        fields = '__all__'
+        fields = ['id', 'label', 'category', 'food_nutrients']
