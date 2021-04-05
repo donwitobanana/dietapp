@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "dietapp"
+version = "0.1.0"
+description = ""
+authors = ["Wit <wit.goszczynski@setapp.pl>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^3.1.7"
+djangorestframework = "^3.12.4"
+requests = "^2.25.1"
+python-dotenv = "^0.17.0"
+psycopg2 = "^2.8.6"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
